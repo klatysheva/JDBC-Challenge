@@ -25,11 +25,23 @@ public class Main {
             }
 
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT into persons (ID, SALUTATION, NAME, SURNAME) values (?,?,?,?)");
-            preparedStatement.setInt(1, 8);
+            preparedStatement.setInt(1, 3);
             preparedStatement.setInt(2, 0);
-            preparedStatement.setString(3, "Name");
-            preparedStatement.setString(4, "Surname");
+            preparedStatement.setString(3, "Name8");
+            preparedStatement.setString(4, "Surname8");
             preparedStatement.execute();
+
+            preparedStatement = connection.prepareStatement("UPDATE persons SET SURNAME = (?) WHERE ID = (?)");
+            preparedStatement.setString(1, "SurnameNew");
+            preparedStatement.setInt(2, 1);
+            preparedStatement.execute();
+
+            preparedStatement = connection.prepareStatement("DELETE FROM persons WHERE ID = (?)");
+            preparedStatement.setInt(1, 1);
+            preparedStatement.execute();
+
+//            preparedStatement = connection.prepareStatement("DELETE FROM persons");
+//            preparedStatement.execute();
 
             resultSet = statement.executeQuery( "select * from persons");
             while(resultSet.next()) {
@@ -38,6 +50,8 @@ public class Main {
                 System.out.println(resultSet.getString(3));
                 System.out.println(resultSet.getString(4));
             }
+
+            preparedStatement = connection.prepareStatement("INSERT into persons (ID, SALUTATION, NAME, SURNAME) values (?,?,?,?)");
 
             preparedStatement.close();
             resultSet.close();
